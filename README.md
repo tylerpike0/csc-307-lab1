@@ -1,1 +1,1 @@
-A react applicatino made for CSC-307.
+A react application made for CSC-307.
