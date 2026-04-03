@@ -7,7 +7,10 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm -w react-frontend run dev",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "workspaces": [
     "packages/*"
