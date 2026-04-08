@@ -60,6 +60,19 @@ const addUser = (user) => {
   return user;
 };
 
+const deleteUserById = (userId) => {
+    users["users_list"] =  users["users_list"].filter(
+        (user) => user["id"] != userId
+    );
+}
+
+app.delete("/users", (req, res) => {
+    const userToDelete = req.body;
+    console.log("deletings user: " + userToDelete)
+    deleteUserById(userToDelete["id"]);
+    res.send();
+});
+
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
