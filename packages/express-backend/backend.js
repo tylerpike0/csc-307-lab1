@@ -1,5 +1,6 @@
 import express from "express";
 import { use } from "react";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
@@ -34,6 +35,7 @@ const users = {
 };
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -82,7 +84,7 @@ app.delete("/users", (req, res) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
-  res.send();
+  res.status(201).send();
 });
 
 app.get("/users/:id", (req, res) => {
