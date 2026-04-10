@@ -24,12 +24,13 @@ const characters = [
 function MyApp() {
     const [characters, setCharacters] = useState([]);
     function updateList(person) {
-      console.log("updating the list");
       postUser(person)
         .then((res) => {
-          console.log("response: " + res)
           if (res.status === 201) {
-            setCharacters([...characters, person])
+            res.json()
+              .then((personData) => {
+                setCharacters([...characters, personData])
+              });
           }
         })
         .catch((error) => {

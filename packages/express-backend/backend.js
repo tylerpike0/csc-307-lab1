@@ -58,8 +58,12 @@ const findUserById = (id) =>
     users["users_list"].find((user) => user["id"] === id);
 
 const addUser = (user) => {
-  users["users_list"].push(user);
-  return user;
+    if (user["id"] === undefined) {
+        const id = Math.floor(Math.random() * 100000);
+        user["id"] = id;
+    }
+    users["users_list"].push(user);
+    return user;
 };
 
 const deleteUserById = (userId) => {
@@ -83,8 +87,8 @@ app.delete("/users", (req, res) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  addUser(userToAdd);
-  res.status(201).send();
+  const user = addUser(userToAdd);
+  res.status(201).json(user);
 });
 
 app.get("/users/:id", (req, res) => {
