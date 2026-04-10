@@ -67,9 +67,13 @@ const addUser = (user) => {
 };
 
 const deleteUserById = (userId) => {
-    users["users_list"] =  users["users_list"].filter(
+    const previousLength = users.users_list.length;
+    users["users_list"] = users["users_list"].filter(
         (user) => user["id"] != userId
     );
+    const newLength = users.users_list.length;
+    console.log("previous: " + previousLength + "new: " + newLength)
+    return previousLength !== newLength;
 }
 
 const findUsersByNameAndJob = (name, job) => {
@@ -81,8 +85,11 @@ const findUsersByNameAndJob = (name, job) => {
 app.delete("/users", (req, res) => {
     const userToDelete = req.body;
     console.log("deletings user: " + userToDelete)
-    deleteUserById(userToDelete["id"]);
-    res.send();
+    if (deleteUserById(userToDelete["id"])) {
+        res.status(204).send()
+    } else {
+        res.status(404).send();
+    }
 });
 
 app.post("/users", (req, res) => {

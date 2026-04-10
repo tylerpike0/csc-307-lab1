@@ -38,10 +38,21 @@ function MyApp() {
         });
     }
     function removeOneCharacter(index) {
-        const updated = characters.filter((character, i) => {
-            return i != index;
+      const person = characters[index]
+        deleteUser(person)
+        .then((res) => {
+          if (res.status === 204) {
+            const updated = characters.filter((_, i) => {
+              return i != index;
+            });
+            setCharacters(updated);
+          } else if (res.status === 404) {
+            console.log("Recieved 404 status. Server failed to find the given user")
+          }
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        setCharacters(updated);
     }
     function fetchUsers() {
       const promise = fetch("http://localhost:8000/users");
@@ -59,6 +70,16 @@ function MyApp() {
     function postUser(person) {
       const promise = fetch("http://localhost:8000/users", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(person),
+      });
+      return promise
+    }
+    function deleteUser(person) {
+      const promise = fetch(`http://localhost:8000/users`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
