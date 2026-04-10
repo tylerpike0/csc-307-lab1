@@ -72,7 +72,6 @@ const deleteUserById = (userId) => {
         (user) => user["id"] != userId
     );
     const newLength = users.users_list.length;
-    console.log("previous: " + previousLength + "new: " + newLength)
     return previousLength !== newLength;
 }
 
@@ -84,7 +83,6 @@ const findUsersByNameAndJob = (name, job) => {
 
 app.delete("/users", (req, res) => {
     const userToDelete = req.body;
-    console.log("deletings user: " + userToDelete)
     if (deleteUserById(userToDelete["id"])) {
         res.status(204).send()
     } else {
